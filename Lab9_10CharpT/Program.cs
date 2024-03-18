@@ -97,14 +97,66 @@ foreach(int m in years2 ){
         k++;
     }
     k=0;
-    }
-    
-    
+    }     
     
 }
 
 static void three(){
+
+    string file = File.ReadAllText("2.txt");
+    string[] str=file.Split("\n");
     
+    int[] years= new int[3];
+    string[]s1=str[0].Split(",");
+    string[]s2=str[1].Split(",");
+    string[]s3=str[2].Split(",");
+    List<int> years2= new List<int>();
+
+    ArrayList a = new ArrayList();
+    ArrayList a1 = new ArrayList();
+
+    
+    Console.WriteLine("People: ");
+    foreach(string i in str ){
+        Console.WriteLine(i);
+    }
+
+    for(int i = 0;i<3;i++){
+        string s =str[i].ToString();
+        string[] st=str[i].Split(",");
+        years[i]=int.Parse(st[3]);
+    }
+
+
+
+    for(int i = 0;i<3;i++){
+        if(years[i] < 30){
+            a.Add(i);
+        }
+    }
+
+    for(int i = 0;i<3;i++){
+        if(years[i] >= 30){
+            a1.Add(i);
+        }
+    }
+
+    Console.WriteLine("Result: ");
+
+int k=0;
+
+
+foreach(var j in str )
+foreach(int m in a ){
+    for(int i = 0;i<3;i++){
+        if(k==m){
+            Console.WriteLine(j[i]);   
+        }
+        k++;
+    }
+    k=0;
+    }    
+
 Console.WriteLine("\n");
 
 }
