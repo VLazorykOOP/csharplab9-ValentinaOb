@@ -1,0 +1,2 @@
+M(n,n1) => if(n>n1){M=n}; else {M=n1};
+m(n,n1) => if(n>n1){m=n1}; else {m=n};
