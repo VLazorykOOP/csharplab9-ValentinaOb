@@ -21,6 +21,7 @@ static void Main(string[] args){
     case 1: { one();  break;}
     case 2: { two();  break;}
     case 3: { three();  break;}
+    case 31: { three1();  break;}
     case 4: { four();  break;}
   }
 
@@ -71,6 +72,8 @@ if (st.Count == 0){
 }
 }
  
+Console.WriteLine("\nResult: ");
+ 
  foreach (int i in res){
     Console.WriteLine(i);
  }
@@ -117,7 +120,7 @@ static void two(){
         }
     }
 
-    Console.WriteLine("Result: ");
+    Console.WriteLine("\nResult: ");
 
 int k=0;
 
@@ -172,11 +175,10 @@ static void three(){
         }
     }
 
-    Console.WriteLine("Result: ");
+    Console.WriteLine("\nResult: ");
+
 
 int k=0;
-
-
 
 foreach(int m in a ){
     foreach(var j in str ){
@@ -197,17 +199,31 @@ foreach(int m in a ){
     }
     k=0;
     }    
+    
 
 
-/*
+Console.WriteLine("A: ");
+
     a.GetEnumerator().MoveNext();
-    th t = new th();
-    t.GetEnumerator();
-    th t1=(th)t.Clone();
-    t.GetEnumerator();
-    t.CompareTo(t1);
+    IEnumerator r = a.GetEnumerator();
+        while (r.MoveNext())
+        {
+            Object obj = r.Current;
+            Console.WriteLine(obj);
+        }
+    
+    a1.GetEnumerator().MoveNext();
+    IEnumerator r1 = a1.GetEnumerator();
+        while (r1.MoveNext())
+        {
+            Object obj = r1.Current;
+            Console.WriteLine(obj);
+        }
 
-*/
+
+    th tt = new th();
+    th t1=(th)tt.Clone();
+    tt.CompareTo(t1);
 
 Console.WriteLine("\n");
 
@@ -216,6 +232,7 @@ Console.WriteLine("\n");
 public class th : IEnumerable, IComparable, ICloneable{
     public ArrayList st;
     public ArrayList st1;
+    public int pos=-1;
 
     public th()
         {
@@ -223,9 +240,30 @@ public class th : IEnumerable, IComparable, ICloneable{
             st1 = new ArrayList();
         }
     public IEnumerator GetEnumerator()
+    {
+        return (IEnumerator)st;
+    }
+    public bool MoveNext()
+    {
+        if (pos < st.Count - 1)
         {
-            return st.GetEnumerator();
+            ++pos;
+            return true;
         }
+        return false;
+    }
+    public void Reset()
+    {
+        pos = -1;
+    }
+    public object Current
+    {
+        get
+        {
+            return st[pos];
+        }
+    }
+
 
     public int CompareTo(object obj)
         {
@@ -243,27 +281,223 @@ public class th : IEnumerable, IComparable, ICloneable{
         }
 }
 
-static void four(){
+static void three1(){
 
+string file = File.ReadAllText("1.txt");
+
+ArrayList st=new ArrayList();
+ArrayList st1=new ArrayList();
+ArrayList res=new ArrayList();
+
+
+foreach (char i in file){
+    if (char.IsDigit(i)){
+        st.Add(i-'0');
+    }
+
+    else if (i == 'M' || i == 'm'){
+        st1.Add(i);
+    }
+}
+
+if(st1.Count > 0){
+while (st.Count > 0){
     
-Console.WriteLine("N: ");
- int n = Convert.ToInt32(Console.ReadLine());
-double[] numb=new double[n];
+    int n = (int)st[st.Count-1];
+    st.RemoveAt(st.Count-1);
+    int n1 = (int)st[st.Count-1];
+    st.RemoveAt(st.Count-1);
+
+    char m = (char)(st1[st1.Count-1]);
+    st1.RemoveAt(st1.Count-1);
+
+    if(m=='M'){
+        res.Add(Math.Max(n, n1));
+    }
+    else{
+        res.Add(Math.Min(n, n1));
+    }
+}
+if (st.Count == 0){
+    int n = (int)(res[0]);
+    int n1 = (int)(res[1]);
+    char m = (char)(st1[0]);
+    st1.RemoveAt(st1.Count-1);
+
+    if(m=='M'){
+        res.Add(Math.Max(n, n1));
+    }
+    else{
+        res.Add(Math.Min(n, n1));
+    }
+}
+}
+ Console.WriteLine("\nResult");
+ res.GetEnumerator().MoveNext();
+    th1 t = new th1();
+    IEnumerator r = res.GetEnumerator();
+        while (r.MoveNext())
+        {
+            Object obj = r.Current;
+            Console.WriteLine(obj);
+        }
+
+
+Console.WriteLine("\n");
+        
+    th1 t1=(th1)t.Clone();
+    t.CompareTo(res);
 
 }
 
-public class musician{
-    List<string> disk = new List<string>();
-    
-    
-    public void add_disk(){
-        Console.WriteLine("Name of Disk: ");
-        disk.Add(Console.ReadLine());
+public class th1 : IEnumerable, IComparable, ICloneable{
+    public ArrayList st;
+    public ArrayList st1;
+    public int pos = -1;
+
+    public th1()
+        {
+            st = new ArrayList();
+            st1 = new ArrayList();
+        }
+        
+    public IEnumerator GetEnumerator()
+    {
+        return (IEnumerator)st;
     }
+    public bool MoveNext()
+    {
+        if (pos < st.Count - 1)
+        {
+            ++pos;
+            return true;
+        }
+        return false;
+    }
+    public void Reset()
+    {
+        pos = -1;
+    }
+    public object Current
+    {
+        get
+        {
+            return st[pos];
+        }
+    }
+
+
+    public int CompareTo(object obj)
+        {
+            int s =st.Count;
+            if(s!=0) {return s.CompareTo(st.Count);}
+        else
+            {
+                throw new Exception("Error");
+            }
+        }
+
+    public object Clone()
+        {
+            th1 t = new th1();
+            return t;
+        }
+}
+
+static void four(){
+
+    Hashtable ht = new Hashtable();
+    
+    Console.WriteLine("N: ");
+    int n = Convert.ToInt32(Console.ReadLine());
+    
+    string[] cdname=new string[n];
+    string[] songname=new string[n];
+    string[] artistname=new string[n];
+    
+    cd c =new cd();
+    song s =new song();
+
+    for(int i = 0; i < n;i++){
+        Console.WriteLine("Name of cd: ");
+        cdname[i]=Console.ReadLine();
+        c.add_disk(cdname[i]);
+
+        Console.WriteLine("Name of song & artist : ");
+        songname[i]=Console.ReadLine();
+        artistname[i]=Console.ReadLine();
+        
+        s.add_song(songname[i],artistname[i]);
+    }
+
+    for(int i = 0; i < n;i++){
+        ht.Add(artistname[i],songname[i]);
+    }
+
+    Console.WriteLine("\nCd: ");
+    c.show();
+
+    Console.WriteLine("\nSong: ");
+    s.show();
+
+    Console.WriteLine("Add cd: ");
+    Console.WriteLine("Name of cd: ");    
+    string name =Console.ReadLine();
+    c.add_disk(name);
+
+    Console.WriteLine("\nCd: ");
+    c.show();
+
+    Console.WriteLine("Add song: ");
+    Console.WriteLine("Name of song & artist: ");    
+    name =Console.ReadLine();
+    string namea =Console.ReadLine();
+    s.add_song(name,namea);
+
+    Console.WriteLine("\nSong: ");
+    s.show();
+
+    Console.WriteLine("Delete cd: ");
+    c.delite_disk();
+
+    Console.WriteLine("Delete song: ");
+    s.delite_song();
+
+    Console.WriteLine("\nCd: ");
+    c.show();
+    Console.WriteLine("\nSong: ");
+    s.show();
+
+    Console.WriteLine("\nCatalog: ");
+    c.show();
+    s.show();
+
+    Console.WriteLine("\nDisk: ");
+    s.show();
+
+
+    Console.WriteLine("\nSearch for artist: ");
+    Console.WriteLine("\nArtist: ");
+    namea =Console.ReadLine();
+    Console.WriteLine(ht[namea]);
+    
+}
+
+public class cd{
+    //public string Name { get; set; }
+    //public List<song> Songs { get; set; }
+    List<string> disk=new List<string>();
+    
+    public void add_disk(string name){
+        //Console.WriteLine("Name of Disk: ");
+        //disk.Add(Console.ReadLine());
+        disk.Add(name);
+    }
+   
 
     public void delite_disk(){
         Console.WriteLine("Delite ");
-        disk.RemoveAt(-1);
+        disk.RemoveAt(disk.Count-1);
     }
 
     public void show(){
@@ -271,9 +505,60 @@ public class musician{
             Console.WriteLine(i);
         }
     }
-
+ 
+/*
+ public musician(string name)
+        {
+            Name = name;
+            Songs = new List<song>();
+        }
+*/
 
 }
+
+public class song{
+    List<string> songs=new List<string>();
+    List<string> artist=new List<string>();
+    
+    public void add_song(string names,string namea){
+        //Console.WriteLine("Name of Song: ");
+        //songs.Add(Console.ReadLine());
+        songs.Add(names);
+        artist.Add(namea);
+    }
+   
+
+    public void delite_song(){
+        Console.WriteLine("Delite ");
+        songs.RemoveAt(songs.Count-1);
+        artist.RemoveAt(artist.Count-1);
+    }
+
+    public void show(){
+        for (int i = 0;i<songs.Count;i++){
+            Console.WriteLine(songs[i]+"  -  "+artist[i]);
+        }
+    }
+
+    /*
+    public string Name { get; set; }
+
+        public song(string name)
+        {
+            Name = name;
+        }
+
+        public string show()
+        {
+            return Name;
+        }
+*/
+
+    }
+
+
+
+
 
 
 }}
